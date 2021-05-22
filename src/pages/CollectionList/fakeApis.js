@@ -142,8 +142,10 @@ const menuList = [
 ];
 const allList = menuList.map((v) => v.content).flat();
 
+const STORAGE_KEY = 'FAVORITE_IDS';
+
 const getFavoriteIds = () => {
-  const value = window.localStorage.getItem('favoriteIds');
+  const value = window.localStorage.getItem(STORAGE_KEY);
   return value ? JSON.parse(value) : [];
 };
 
@@ -152,15 +154,15 @@ const setFavoriteIds = (ids = []) => {
 
   const newIds = Array.from(...new Set(originIds.concat([].concat(ids))));
 
-  window.localStorage.setItem(JSON.stringify(newIds));
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(newIds));
 };
 
-const remoteFavoriteIds = (ids = []) => {
+const removeFavoriteIds = (ids = []) => {
   const originIds = getFavoriteIds();
 
   const newIds = originIds.filter((v) => ![].concat(ids).includes(v));
 
-  window.localStorage.setItem(JSON.stringify(newIds));
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(newIds));
 };
 
 const response = (resolveData, timeout = 300) => {
@@ -181,7 +183,7 @@ export const addFavorite = (menuId) => {
 };
 
 export const removeFavorite = (menuId) => {
-  remoteFavoriteIds(menuId);
+  removeFavoriteIds(menuId);
   return response({
     code: 1,
     msg: 'success',
