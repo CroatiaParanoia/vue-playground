@@ -152,7 +152,7 @@ const getFavoriteIds = () => {
 const setFavoriteIds = (ids = []) => {
   const originIds = getFavoriteIds();
 
-  const newIds = Array.from(...new Set(originIds.concat([].concat(ids))));
+  const newIds = [...new Set(originIds.concat([].concat(ids)))];
 
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(newIds));
 };
